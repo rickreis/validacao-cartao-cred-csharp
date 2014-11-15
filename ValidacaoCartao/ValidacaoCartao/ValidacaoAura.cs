@@ -6,17 +6,12 @@ namespace ValidacaoCartao
     {
         public bool Validar(string numero)
         {
-            if (String.IsNullOrWhiteSpace(numero))
+            if (String.IsNullOrWhiteSpace(numero) && numero.Length != 19)
             {
                 return false;
-            }
+            }            
 
-            if (numero.Length != 19)
-            {
-                return false;
-            }
-
-            return numero.ValidacaoModuloDez(fator: "1212121212121212121");
+            return this.ValidacaoModuloDez(numero, fator: "1212121212121212121");
         }
     }
 }

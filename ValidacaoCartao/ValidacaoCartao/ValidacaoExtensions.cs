@@ -8,7 +8,7 @@ namespace ValidacaoCartao
         /// Aplicar a valicação Módulo 10, para a validação de cartão
         /// </summary>
         /// <returns>Retorna se o cartão é válido</returns>
-        public static bool ValidacaoModuloDez(this string numeroCartao, string fator)
+        public static bool ValidacaoModuloDez(this IValidacaoCartao validacaoCartao, string numeroCartao, string fator)
         {
             if (String.IsNullOrWhiteSpace(numeroCartao))
             {
@@ -16,7 +16,7 @@ namespace ValidacaoCartao
             }
 
             int _numeroVez, _peso, _digitoVerificador;
-            int _soma = 0;          
+            int _soma = 0;
 
             //Verifica se tem o número de digitos correto do cartão
             for (int i = 0; i < numeroCartao.Length - 1; i++)
@@ -40,20 +40,19 @@ namespace ValidacaoCartao
                 }
             }
 
-            //Verificando a soma e o resto para validar último digito. 
-            //resto = soma % 10
+            //Verificando a soma e o resto para validar último digito. (resto = soma % 10)
             _digitoVerificador = _soma % 10;
             if (_digitoVerificador != 0)
+            {
                 _digitoVerificador = 10 - _digitoVerificador;
+            }
 
             if (Convert.ToInt32(numeroCartao.Substring(numeroCartao.Length - 1, 1)) == _digitoVerificador)
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
-        }       
+
+            return false;
+        }
     }
 }

@@ -1,27 +1,27 @@
 ﻿using System;
+using System.Linq;
 
 namespace ValidacaoCartao
 {
     public class ValidacaoMasterCard : IValidacaoCartao
     {
+        static string[] codigosValidos = new string[] { "51", "52", "53", "54", "55" };
+
         public bool Validar(string numero)
         {
-            if (String.IsNullOrWhiteSpace(numero))
+            if (String.IsNullOrWhiteSpace(numero) && numero.Length != 16)
             {
                 return false;
             }
 
-            if (numero.Length != 16
-                && (numero.Substring(0, 2) != "51"
-                || numero.Substring(0, 2) != "52"
-                || numero.Substring(0, 2) != "53"
-                || numero.Substring(0, 2) != "54"
-                || numero.Substring(0, 2) != "55"))
+            string codigoNumero = numero.Substring(0, 2);
+
+            if (codigosValidos.Any(x=> x == codigoNumero) == false)
             {
                 return false;
             }
 
-            return numero.ValidacaoModuloDez(fator: "2121212121212121212");
+            return this.ValidacaoModuloDez(numero, fator: "2121212121212121212");
         }
     }
 }

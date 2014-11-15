@@ -1,19 +1,22 @@
 ﻿using System;
+
 namespace ValidacaoCartao
 {
     public class ValidacaoVisa : IValidacaoCartao
     {
         public bool Validar(string numero)
         {
-            if (String.IsNullOrWhiteSpace(numero))
+            if (String.IsNullOrWhiteSpace(numero) && (numero.Length != 13 || numero.Length != 16))
             {
                 return false;
             }
 
-            if ((numero.Length != 13 || numero.Length != 16) && numero.Substring(0, 1) != "4")
-                return false;            
+            if (numero.StartsWith("4") == false)
+            {
+                return false;
+            }   
 
-            return numero.ValidacaoModuloDez(fator: "2121212121212121212");
+            return this.ValidacaoModuloDez(numero, fator: "2121212121212121212");
         }
     }
 }

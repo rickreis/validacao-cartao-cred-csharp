@@ -6,12 +6,12 @@ namespace ValidacaoCartao
     {   
         public bool Validar(string numero)
         {
-            if (String.IsNullOrWhiteSpace(numero))
+            if (String.IsNullOrWhiteSpace(numero) && numero.Length != 19)
             {
                 return false;
             }
 
-            if (numero.Substring(0, 3) != "384" || numero.Length != 19)
+            if (numero.Substring(0, 3) != "384")
             {
                 return false;
             }
